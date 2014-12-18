@@ -53,7 +53,7 @@ class EloquentContentSignoffRepository implements ContentSignoffRepositoryInterf
      */
     public function pending($per_page)
     {
-        return $this->signoff_request_model->whereStatus('pending')->paginate($per_page);
+        return $this->signoff_request_model->whereStatus('pending')->orderBy('created_at', 'desc')->paginate($per_page);
     }
 
     /**
