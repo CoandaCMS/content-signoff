@@ -77,7 +77,7 @@ class ContentSignoffModuleProvider implements \CoandaCMS\Coanda\CoandaModuleProv
     {
         if ($coanda->canViewModule('contentsignoff'))
         {
-            $coanda->addMenuItem('contentsignoff', 'Signoff');
+            $coanda->addMenuItem('contentsignoff', 'Signoff requests');
         }
     }
 }

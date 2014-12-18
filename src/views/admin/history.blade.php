@@ -40,7 +40,7 @@
 						<table class="table table-striped">
 							@foreach ($requests as $request)
 							<tr>
-								<td>Version <span class="badge badge-default">#{{ $request->version->version }}</span> of <a href="{{ Coanda::adminUrl('contentsignoff/request/' . $request->id) }}">{{ $request->version->page->name }}</a> from {{ $request->version->creator_name }}</td>
+								<td>Version <span class="badge badge-default">#{{ $request->version }}</span> of <a href="{{ Coanda::adminUrl('contentsignoff/request/' . $request->id) }}">{{ $request->page_name }}</a> from {{ $request->requester_name() }}</td>
 							    <td>
 							        <span class="label label-{{ $request->status == 'declined' ? 'danger' : 'success' }}">{{ ucfirst($request->status) }}</span> by {{ $request->actioner_name() }} on {{ $request->updated_at->format(Config::get('coanda::coanda.datetime_format')) }}
 							    </td>

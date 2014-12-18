@@ -16,6 +16,10 @@ class CreateSignoffRequestTable extends Migration {
 
 			$table->increments('id');
 			$table->integer('version_id');
+			$table->integer('version');
+			$table->integer('page_id');
+			$table->string('page_name');
+			$table->integer('requested_by');
 			$table->integer('actioned_by');
 			$table->string('status');
 			$table->text('message');

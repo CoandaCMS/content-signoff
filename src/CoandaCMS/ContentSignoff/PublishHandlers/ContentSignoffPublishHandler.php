@@ -1,6 +1,10 @@
 <?php namespace CoandaCMS\ContentSignoff\PublishHandlers;
 
 use App;
+use Mail;
+use Config;
+use Redirect;
+use Coanda;
 use CoandaCMS\Coanda\Pages\PublishHandlers\PublishHandlerInterface;
 
 class ContentSignoffPublishHandler implements PublishHandlerInterface {
@@ -31,9 +35,11 @@ class ContentSignoffPublishHandler implements PublishHandlerInterface {
 
     public function execute($version, $data, $pageRepository, $urlRepository)
     {
-        // Create new signoff request...
+        // Create new sign off request...
         $manager = App::make('CoandaCMS\ContentSignoff\ContentSignoffManager');
-        $manager->createNewSignoffRequest($version->id);
+        $request = $manager->createNewSignoffRequest($version, \Coanda::currentUserId());
+
+        $this->sendNotifications($request);
 
         $handler_data = [];
         $handler_data = $this->reserveNewSlug($handler_data, $version, $urlRepository);
@@ -41,6 +47,8 @@ class ContentSignoffPublishHandler implements PublishHandlerInterface {
         $version->publish_handler_data = json_encode($handler_data);
         $version->status = 'pending';
         $version->save();
+
+        return Redirect::to(Coanda::adminUrl('pages/view/' . $version->page_id . '?tab=versions'))->with('info_message', 'Your request for sign off has been sent. Until then your version will remain pending.');
     }
 
     private function reserveNewSlug($handler_data, $version, $urlRepository)
@@ -55,5 +63,33 @@ class ContentSignoffPublishHandler implements PublishHandlerInterface {
         }
 
         return $handler_data;
+    }
+
+    private function sendNotifications($request)
+    {
+        $groups = App::make('CoandaCMS\Coanda\Users\UserManager')->getAllGroups();
+        $notify_email_list = [];
+
+        foreach ($groups as $group)
+        {
+            $permissions = $group->access_list;
+
+            if ((isset($permissions['everything']) && $permissions['everything'][0] == '*') || (isset($permissions['contentsignoff']) && $permissions['contentsignoff'][0] == '*'))
+            {
+                foreach ($group->users as $user)
+                {
+                    $notify_email_list[] = $user->email;
+                }
+            }
+        }
+
+        foreach ($notify_email_list as $notify_email)
+        {
+            Mail::send('coanda-content-signoff::admin.emails.requestforsignoff', ['request' => $request ], function($message) use ($notify_email, $request)
+            {
+                $message->from(Config::get('coanda::coanda.site_admin_email'), Config::get('coanda::coanda.site_name'));
+                $message->to($notify_email)->subject('Request to sign off ' . $request->version . ' of ' . $request->page_name);
+            });
+        }
     }
 }

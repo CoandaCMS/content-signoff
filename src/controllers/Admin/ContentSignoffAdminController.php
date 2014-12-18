@@ -8,8 +8,14 @@ use CoandaCMS\Coanda\Controllers\BaseController;
 
 class ContentSignoffAdminController extends BaseController {
 
+    /**
+     * @var ContentSignoffManager
+     */
     private $signoff_manager;
 
+    /**
+     * @param ContentSignoffManager $signoff_manager
+     */
     public function __construct(ContentSignoffManager $signoff_manager)
     {
         $this->beforeFilter('csrf', array('on' => 'post'));
@@ -17,6 +23,9 @@ class ContentSignoffAdminController extends BaseController {
         $this->signoff_manager = $signoff_manager;
     }
 
+    /**
+     * @return mixed
+     */
     public function getIndex()
     {
         Coanda::checkAccess('contentsignoff', 'view');
@@ -26,6 +35,10 @@ class ContentSignoffAdminController extends BaseController {
         return View::make('coanda-content-signoff::admin.index', [ 'requests' => $requests ]);
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
     public function getRequest($id)
     {
         Coanda::checkAccess('contentsignoff', 'view');
@@ -33,6 +46,10 @@ class ContentSignoffAdminController extends BaseController {
         return View::make('coanda-content-signoff::admin.request', [ 'request' => $this->signoff_manager->getById($id) ]);
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
     public function postRequest($id)
     {
         Coanda::checkAccess('contentsignoff', 'view');
@@ -59,6 +76,9 @@ class ContentSignoffAdminController extends BaseController {
         }
     }
 
+    /**
+     * @return mixed
+     */
     public function getHistory()
     {
         Coanda::checkAccess('contentsignoff', 'view');

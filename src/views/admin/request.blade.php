@@ -60,31 +60,33 @@
 					<table class="table table-striped">
 						<tr>
 							<th>Creator</th>
-							<td>{{ $request->version->creator_name }}</td>
+							<td>{{ $request->requester_name() }}</td>
 						</tr>
 						<tr>
 							<th>Created</th>
-							<td>{{ $request->version->updated_at->format(Config::get('coanda::coanda.datetime_format')) }}</td>
+							<td>{{ $request->created_at->format(Config::get('coanda::coanda.datetime_format')) }}</td>
 						</tr>
 						<tr>
 							<th>Page</th>
-							<td>{{ $request->version->page->name }}</td>
+							<td>{{ $request->page_name }}</td>
 						</tr>
 						<tr>
 							<th>Version</th>
-							<td>#{{ $request->version->version }}</td>
+							<td>#{{ $request->version }}</td>
 						</tr>
 						@if ($request->status == 'pending')
-							<tr>
-								<th>URL</th>
-								<td>
-									{{ $request->version->parent_slug }}/{{ $request->version->slug }}
-								</td>
-							</tr>
-							<tr>
-								<th>Preview</th>
-								<td>{{ url($request->version->preview_url) }} <a class="new-window" href="{{ url($request->version->preview_url) }}"><i class="fa fa-share-square-o"></i></a></td>
-							</tr>
+							@if ($request->version_object)
+								<tr>
+									<th>URL</th>
+									<td>
+										{{ $request->version_object->parent_slug }}/{{ $request->version_object->slug }}
+									</td>
+								</tr>
+								<tr>
+									<th>Preview</th>
+									<td>{{ url($request->version_object->preview_url) }} <a class="new-window" href="{{ url($request->version_object->preview_url) }}"><i class="fa fa-share-square-o"></i></a></td>
+								</tr>
+							@endif
 						@else
 							<tr>
 								<th>Message</th>
@@ -97,20 +99,26 @@
 					</table>
 
 					@if ($request->status == 'pending')
-						<hr>
+						@if ($request->version_object)
+							<hr>
 
-						{{ Form::open(['url' => Coanda::adminUrl('contentsignoff/request/' . $request->id)]) }}
+							{{ Form::open(['url' => Coanda::adminUrl('contentsignoff/request/' . $request->id)]) }}
 
-							<div class="form-group">
-								<label for="message">Message</label>
-								<textarea class="form-control" id="message" name="message" rows="5"></textarea>
-								<span class="help-block">This message will be shared with {{ $request->version->creator_name }}</span>
+								<div class="form-group">
+									<label for="message">Message</label>
+									<textarea class="form-control" id="message" name="message" rows="5"></textarea>
+									<span class="help-block">This message will be shared with {{ $request->requester_name() }}</span>
+								</div>
+
+								{{ Form::button('Accept and publish this version', ['name' => 'accept', 'value' => 'true', 'type' => 'submit', 'class' => 'btn btn-success']) }}
+								{{ Form::button('Decline and revert to draft', ['name' => 'decline', 'value' => 'true', 'type' => 'submit', 'class' => 'btn btn-danger']) }}
+
+							{{ Form::close() }}
+						@else
+							<div class="alert alert-danger">
+								Error, content version could not be found.
 							</div>
-
-							{{ Form::button('Accept and publish this version', ['name' => 'accept', 'value' => 'true', 'type' => 'submit', 'class' => 'btn btn-success']) }}
-							{{ Form::button('Decline and revert to draft', ['name' => 'decline', 'value' => 'true', 'type' => 'submit', 'class' => 'btn btn-danger']) }}
-
-						{{ Form::close() }}
+						@endif
 					@endif
 				</div>
 			</div>
