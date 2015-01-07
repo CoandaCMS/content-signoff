@@ -20,7 +20,7 @@
 						<td style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-size: 100%; line-height: 1.6; margin: 0; padding: 0;">
 							<p style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 1.6; font-weight: normal; margin: 0 0 10px; padding: 0;">Hi,</p>
 							<p style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 1.6; font-weight: normal; margin: 0 0 10px; padding: 0;"><strong>{{ $request->requester_name() }}</strong> has requested that Version #{{ $request->version }} of {{ $request->page_name }} be signed off before it is published to the site.</p>
-							<p style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 1.6; font-weight: normal; margin: 0 0 10px; padding: 0;">Please visit <a href="{{ Coanda::adminUrl('signoff/request/' . $request->id) }}">{{ Coanda::adminUrl('signoff/request/' . $request->id) }}</a> to accept of decline this request</p>
+							<p style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 1.6; font-weight: normal; margin: 0 0 10px; padding: 0;">Please visit <a href="{{ Coanda::adminUrl('contentsignoff/request/' . $request->id) }}">{{ Coanda::adminUrl('contentsignoff/request/' . $request->id) }}</a> to accept of decline this request</p>
 							<p style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 1.6; font-weight: normal; margin: 10px 0 10px 0; padding: 0;">Thanks, have a lovely day.</p>
 						</td>
 					</tr>
