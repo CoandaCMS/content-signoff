@@ -36,7 +36,6 @@
 			</ul>
 			<div class="tab-content">
 				<div class="tab-pane active" id="forms">
-
 					@if ($requests->count() > 0)
 						<table class="table table-striped">
 							@foreach ($requests as $request)

@@ -13,7 +13,7 @@
 			@if ($request->status !== 'pending')
 				<li><a href="{{ Coanda::adminUrl('contentsignoff/history') }}">History</a></li>
 			@endif
-
+			
 			<li>Request to signoff</li>
 		</ul>
 	</div>

@@ -48,7 +48,7 @@ class ContentSignoffPublishHandler implements PublishHandlerInterface {
         $version->status = 'pending';
         $version->save();
 
-        return Redirect::to(Coanda::adminUrl('pages/view/' . $version->page_id . '?tab=versions'))->with('info_message', 'Your request for signoff has been sent. Until then your version will remain pending.');
+        return Redirect::to(Coanda::adminUrl('pages/view/' . $version->page_id . '?tab=versions'))->with('info_message', 'Your request for sign off has been sent. Until then your version will remain pending.');
     }
 
     private function reserveNewSlug($handler_data, $version, $urlRepository)

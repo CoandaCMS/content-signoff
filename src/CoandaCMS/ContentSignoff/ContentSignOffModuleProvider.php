@@ -80,7 +80,6 @@ class ContentSignoffModuleProvider implements \CoandaCMS\Coanda\CoandaModuleProv
             $coanda->addMenuItem('contentsignoff', 'Signoff requests');
         }
     }
-
     /**
      * @param $coanda
      * @return string
