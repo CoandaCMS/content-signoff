@@ -35,7 +35,7 @@ class ContentSignoffPublishHandler implements PublishHandlerInterface {
 
     public function execute($version, $data, $pageRepository, $urlRepository)
     {
-        // Create new sign off request...
+        // Create new signoff request...
         $manager = App::make('CoandaCMS\ContentSignoff\ContentSignoffManager');
         $request = $manager->createNewSignoffRequest($version, \Coanda::currentUserId());
 
@@ -88,7 +88,7 @@ class ContentSignoffPublishHandler implements PublishHandlerInterface {
             Mail::send('coanda-content-signoff::admin.emails.requestforsignoff', ['request' => $request ], function($message) use ($notify_email, $request)
             {
                 $message->from(Config::get('coanda::coanda.site_admin_email'), Config::get('coanda::coanda.site_name'));
-                $message->to($notify_email)->subject('Request to sign off ' . $request->version . ' of ' . $request->page_name);
+                $message->to($notify_email)->subject('Request to signoff ' . $request->version . ' of ' . $request->page_name);
             });
         }
     }

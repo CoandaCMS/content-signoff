@@ -80,4 +80,24 @@ class ContentSignoffModuleProvider implements \CoandaCMS\Coanda\CoandaModuleProv
             $coanda->addMenuItem('contentsignoff', 'Signoff requests');
         }
     }
+    /**
+     * @param $coanda
+     * @return string
+     */
+    public function buildAdminDashboard($coanda)
+    {
+        if ($coanda->canViewModule('contentsignoff'))
+        {
+            $coanda->addDashBoardWidgetTemplate('coanda-content-signoff::admin.modules.contentsignoff.dashboard.contentsignoff');
+        }
+    }
+
+    /**
+     * @return ContentSignoffManager
+     */
+    public function manager()
+    {
+        return \App::make('CoandaCMS\ContentSignoff\ContentSignoffManager');;
+    }
+    
 }

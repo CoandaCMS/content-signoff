@@ -15,7 +15,7 @@
 
 <div class="row">
 	<div class="page-name col-md-12">
-		<h1 class="pull-left">Sign off requests</h1>
+		<h1 class="pull-left">Signoff requests</h1>
 		<div class="page-status pull-right">
 			<span class="label label-default">Total {{ $requests->getTotal() }}</span>
 		</div>
@@ -36,7 +36,6 @@
 			</ul>
 			<div class="tab-content">
 				<div class="tab-pane active" id="forms">
-
 					@if ($requests->count() > 0)
 						<table class="table table-striped">
 							@foreach ($requests as $request)
