@@ -23,7 +23,7 @@
 	<div class="page-name col-md-12">
 		<h1 class="pull-left">Request to signoff</h1>
 		<div class="page-status pull-right">
-			<span class="label label-{{ $request->status == 'declined' ? 'danger' : 'success' }}">{{ ucfirst($request->status) }}</span>
+			<span class="label label-{{ $request->status == 'declined' ? 'danger' : ($request->status == 'pending' ? 'warning' : 'success') }}">{{ ucfirst($request->status) }}</span>
 		</div>
 	</div>
 </div>
