@@ -16,9 +16,6 @@
                     @foreach ($requests as $request)
                     <tr>
                         <td>Version <span class="badge badge-default">#{{ $request->version }}</span> of <a href="{{ Coanda::adminUrl('contentsignoff/request/' . $request->id) }}">{{ $request->page_name }}</a> from {{ $request->requester_name() }}</td>
-                        <td class="tight">
-                            <span class="label label-warning">{{ ucfirst($request->status) }}</span>
-                        </td>
                     </tr>
                     @endforeach
                 </table>
