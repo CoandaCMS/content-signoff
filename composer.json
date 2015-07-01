@@ -1,0 +1,25 @@
+{
+    "name": "coandacms/content-signoff",
+    "description": "A package for Coanda CMS which allows content to be signed off.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alex Dover",
+            "email": "me@alexdover.co.uk"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/support": "4.2.*"
+    },
+    "autoload": {
+        "classmap": [
+            "src/migrations",
+            "src/controllers"
+        ],
+        "psr-0": {
+            "CoandaCMS\\ContentSignoff\\": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}
